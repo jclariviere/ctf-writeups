@@ -1,10 +1,6 @@
-Title: CTF writeup - 9447 CTF 2015: YWS
-Category: Infosec
-Tags: ctf, directory traversal
-Summary: Directory traversal and directory listing
+# 9447 CTF 2015: YWS
 
-
-## Challenge
+**Category:** Web
 
 > My friend wrote a cool web server. I'm sure he's stored some great doxxxs on the website. Can you take a look and report back any interesting things you find?
 >
@@ -122,22 +118,17 @@ Flag: `9447{D1rect0ries_ARe_h4rd}`
 
 After the CTF, I followed discussions on IRC and learned that curl will "fix" the path for you before sending the query.
 
-```console hl_lines="1 6"
+```console
 $ curl -v http://127.0.0.1:8080/../../..
-* Rebuilt URL to: http://127.0.0.1:8080/
-* Hostname was NOT found in DNS cache
-*   Trying 127.0.0.1...
-* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+...
 > GET / HTTP/1.1
-> User-Agent: curl/7.38.0
-> Host: 127.0.0.1:8080
-> Accept: */*
+...
 ```
 
 Most people seem to have used BurpSuite or a plain connection with netcat to get the flag:
 
-```bash
-printf "GET /.. HTTP/1.1\r\n\r\n" | nc yws-fsiqc922.9447.plumbing 80
+```console
+$ printf "GET /.. HTTP/1.1\r\n\r\n" | nc yws-fsiqc922.9447.plumbing 80
 ```
 
 ## Why adding it as a query param worked
